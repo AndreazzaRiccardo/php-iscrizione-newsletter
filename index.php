@@ -1,11 +1,14 @@
 <?php
+
 include __DIR__ . "/functions.php";
+
+session_start();
 
 if (isset($_POST['email'])) {
     $mail_convalidation_mex = email_control($_POST['email']);
+    $_GET['email'] = $_SESSION['mail'];
     if ($_SESSION['auth'] === true) {
-        header('Location: ./thankyou.php');
-        die;
+        header('Location: ./thankyou.php'); 
     }
 }
 
@@ -28,7 +31,7 @@ if (isset($_POST['email'])) {
         <h1 class="text-center">INSERISCI LA TUA MAIL</h1>
         <form class="d-flex flex-column align-items-center " action="index.php" method="POST">
             <label for="mail" class="form-label">Email address</label>
-            <input type="text" class="form-control-lg" id="mail" name="email" placeholder="name@example.com">
+            <input value="<?php echo isset($_SESSION['mail']) ? $_SESSION['mail'] : '' ?>" type="text" class="form-control-lg" id="mail" name="email" placeholder="name@example.com">
             <button class="btn btn-primary mt-4" type="submit">LOGIN</button>
         </form>
         <?php if (isset($mail_convalidation_mex)) { ?>
