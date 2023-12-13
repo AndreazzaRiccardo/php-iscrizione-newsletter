@@ -1,7 +1,13 @@
 <?php
 include __DIR__ . "/functions.php";
 
-$mail_convalidation_mex = email_control($_POST['email']);
+if (isset($_POST['email'])) {
+    $mail_convalidation_mex = email_control($_POST['email']);
+    if ($_SESSION['auth'] === true) {
+        header('Location: ./thankyou.php');
+        die;
+    }
+}
 
 ?>
 
@@ -25,7 +31,9 @@ $mail_convalidation_mex = email_control($_POST['email']);
             <input type="text" class="form-control-lg" id="mail" name="email" placeholder="name@example.com">
             <button class="btn btn-primary mt-4" type="submit">LOGIN</button>
         </form>
-        <h2 class="text-center mt-5 alert <?= $mail_convalidation_mex ? 'alert-success' : 'alert-danger' ?>"><?= $mail_convalidation_mex ? 'Email valida' : 'Email NON valida' ?></h2>
+        <?php if (isset($mail_convalidation_mex)) { ?>
+            <h2 class="text-center mt-5 alert <?= $mail_convalidation_mex ? 'alert-success' : 'alert-danger' ?>"><?= $mail_convalidation_mex ? 'Email valida' : 'Email NON valida' ?></h2>
+        <?php } ?>
     </main>
 </body>
 
