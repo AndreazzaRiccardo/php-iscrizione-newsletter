@@ -1,6 +1,8 @@
 <?php
 include __DIR__ . "/functions.php";
 
+$mail_convalidation_mex = email_control($_POST['email']);
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +25,7 @@ include __DIR__ . "/functions.php";
             <input type="text" class="form-control-lg" id="mail" name="email" placeholder="name@example.com">
             <button class="btn btn-primary mt-4" type="submit">LOGIN</button>
         </form>
-        <h2 class="text-center mt-5"><?php echo isset($_POST['email']) ? email_control($_POST['email']) : ''; ?></h2>
+        <h2 class="text-center mt-5 alert <?= $mail_convalidation_mex ? 'alert-success' : 'alert-danger' ?>"><?= $mail_convalidation_mex ? 'Email valida' : 'Email NON valida' ?></h2>
     </main>
 </body>
 
