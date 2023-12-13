@@ -1,20 +1,7 @@
 <?php
-
-$mail_message = '';
-
-if(isset($_POST['email'])) {
-    if(!str_contains($_POST['email'], '@') && !str_contains($_POST['email'], '.')) {
-        $mail_message = 'La mail inserita NON è valida';
-    } else {
-        $mail_message = 'Mail valida';
-    }
-}
-
+include __DIR__ . "/functions.php";
 
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +23,7 @@ if(isset($_POST['email'])) {
             <input type="text" class="form-control-lg" id="mail" name="email" placeholder="name@example.com">
             <button class="btn btn-primary mt-4" type="submit">LOGIN</button>
         </form>
-        <h2 class="text-center mt-5"><?= $mail_message; ?></h2>
+        <h2 class="text-center mt-5"><?php echo isset($_POST['email']) ? email_control($_POST['email']) : ''; ?></h2>
     </main>
 </body>
 
