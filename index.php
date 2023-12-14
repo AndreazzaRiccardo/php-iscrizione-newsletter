@@ -5,11 +5,8 @@ include __DIR__ . "/functions.php";
 session_start();
 
 if (isset($_POST['email'])) {
-    $mail_convalidation_mex = email_control($_POST['email']);
-    $_GET['email'] = $_SESSION['mail'];
-    if ($_SESSION['auth'] === true) {
-        header('Location: ./thankyou.php'); 
-    }
+    $_SESSION['email'] = $_POST['email'];
+    $result = email_control($_POST['email']);
 }
 
 ?>
@@ -28,14 +25,14 @@ if (isset($_POST['email'])) {
 
 <body>
     <main class="container mt-5">
-        <h1 class="text-center">INSERISCI LA TUA MAIL</h1>
+        <h1 class="text-center">ISCRIVITI ALLA NOSTRA NEWSLETTER</h1>
         <form class="d-flex flex-column align-items-center " action="index.php" method="POST">
-            <label for="mail" class="form-label">Email address</label>
-            <input value="<?php echo isset($_SESSION['mail']) ? $_SESSION['mail'] : '' ?>" type="text" class="form-control-lg" id="mail" name="email" placeholder="name@example.com">
-            <button class="btn btn-primary mt-4" type="submit">LOGIN</button>
+            <label for="email" class="form-label">Inserisci email</label>
+            <input value="<?= $_SESSION['email'] ?? '' ?>" type="text" class="form-control-lg" id="email" name="email" placeholder="name@example.com">
+            <button class="btn btn-primary mt-4" type="submit">ISCRIVITI</button>
         </form>
-        <?php if (isset($mail_convalidation_mex)) { ?>
-            <h2 class="text-center mt-5 alert <?= $mail_convalidation_mex ? 'alert-success' : 'alert-danger' ?>"><?= $mail_convalidation_mex ? 'Email valida' : 'Email NON valida' ?></h2>
+        <?php if (isset($result)) { ?>
+            <h2 class="text-center mt-5 alert <?= !$result ? 'alert-danger' : '' ?>"><?= !$result ? 'Email NON valida' : '' ?></h2>
         <?php } ?>
     </main>
 </body>

@@ -1,12 +1,14 @@
 <?php
-function email_control($email){
-    if (!str_contains($email, '@') || !str_contains($email, '.')) {
-        $_SESSION['mail'] = $email;
-        $_SESSION['auth'] = false;
-        return false;
+/**
+ * Controlla se l'email è formattata correttamente
+ * @param mixed $email
+ * 
+ * @return [boolean] true se è valida, false altrimenti
+ */
+function email_control($email) {
+    if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        header('Location: ./thankyou.php');
     } else {
-        $_SESSION['mail'] = $email;
-        $_SESSION['auth'] = true;
-        return true;
+        return false;
     }
 }
